@@ -38,7 +38,7 @@ export default function Dashboard() {
 
   if (isLoading) {
     return (
-      <div className="p-4 flex items-center justify-center min-h-screen">
+      <div className="p-4 flex items-center justify-center min-h-[calc(100vh-4rem)]">
         <div className="animate-pulse space-y-4 w-full">
           {[...Array(5)].map((_, i) => (
             <div key={i} className="h-24 bg-muted rounded-lg" />
@@ -49,34 +49,34 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+    <div className="p-4 pb-20">
+      <h1 className="text-2xl font-bold mb-6">Welcome Back!</h1>
 
-      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
         <MetricCard
           title="Daily Sale"
           value={`₹${dailySale.toLocaleString()}`}
-          icon={<Receipt className="h-4 w-4 text-muted-foreground" />}
+          icon={<Receipt className="h-5 w-5 text-primary" />}
         />
         <MetricCard
           title="Daily Expense"
           value={`₹${dailyExpense.toLocaleString()}`}
-          icon={<DollarSign className="h-4 w-4 text-muted-foreground" />}
+          icon={<DollarSign className="h-5 w-5 text-primary" />}
         />
         <MetricCard
           title="Total Mall"
           value={`₹${totalMall.toLocaleString()}`}
-          icon={<ShoppingBag className="h-4 w-4 text-muted-foreground" />}
+          icon={<ShoppingBag className="h-5 w-5 text-primary" />}
         />
         <MetricCard
           title="Total Sale"
           value={`₹${totalSale.toLocaleString()}`}
-          icon={<Building2 className="h-4 w-4 text-muted-foreground" />}
+          icon={<Building2 className="h-5 w-5 text-primary" />}
         />
         <MetricCard
           title="Total Expense"
           value={`₹${totalExpense.toLocaleString()}`}
-          icon={<TrendingDown className="h-4 w-4 text-muted-foreground" />}
+          icon={<TrendingDown className="h-5 w-5 text-primary" />}
         />
       </div>
     </div>
