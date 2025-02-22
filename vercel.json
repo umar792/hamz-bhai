@@ -1,6 +1,6 @@
 {
   "functions": {
-    "server/index.js": {
+    "api/index.js": {
       "runtime": "nodejs18@1.0.0",
       "includeFiles": "api/index.js"
     }
