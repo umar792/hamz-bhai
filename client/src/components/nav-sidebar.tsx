@@ -123,7 +123,7 @@ export function NavSidebar() {
       </div>
 
       {/* Content Padding for Mobile Header */}
-      <div className="md:hidden h-16" />
+      <div className="md:hidden h-20 mb-8" />
     </>
   );
 }
