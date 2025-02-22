@@ -1,0 +1,43 @@
+
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  email TEXT NOT NULL UNIQUE,
+  password TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS malls (
+  id SERIAL PRIMARY KEY,
+  amount INTEGER NOT NULL,
+  reason TEXT NOT NULL,
+  date DATE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS expenses (
+  id SERIAL PRIMARY KEY,
+  amount INTEGER NOT NULL,
+  reason TEXT NOT NULL,
+  name TEXT NOT NULL,
+  date DATE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS sales (
+  id SERIAL PRIMARY KEY,
+  amount INTEGER NOT NULL,
+  reason TEXT NOT NULL,
+  description TEXT NOT NULL,
+  date DATE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS companies (
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS transactions (
+  id SERIAL PRIMARY KEY,
+  company_id INTEGER NOT NULL,
+  amount INTEGER NOT NULL,
+  type TEXT NOT NULL,
+  date DATE NOT NULL,
+  FOREIGN KEY (company_id) REFERENCES companies(id)
+);
