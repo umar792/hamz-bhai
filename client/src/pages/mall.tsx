@@ -34,7 +34,7 @@ export default function MallPage() {
     },
   });
 
-  const { data: malls } = useQuery<Mall[]>({
+  const { data: malls, isLoading } = useQuery<Mall[]>({
     queryKey: ["/api/malls"],
   });
 
@@ -45,14 +45,27 @@ export default function MallPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/malls"] });
       toast({ title: "Mall added successfully" });
+      form.reset();
     },
   });
 
+  if (isLoading) {
+    return (
+      <div className="p-4 flex items-center justify-center min-h-screen">
+        <div className="animate-pulse space-y-4 w-full">
+          {[...Array(5)].map((_, i) => (
+            <div key={i} className="h-16 bg-muted rounded-lg" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Mall Management</h1>
-        <AddModal title="Add Mall">
+    <div className="p-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <h1 className="text-2xl font-bold">Mall Management</h1>
+        <AddModal title="Add Mall" loading={mutation.isPending}>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit((values) => mutation.mutate(values))}
@@ -69,7 +82,7 @@ export default function MallPage() {
                         type="number"
                         {...field}
                         onChange={(e) =>
-                          field.onChange(parseInt(e.target.value, 10))
+                          field.onChange(parseInt(e.target.value) || 0)
                         }
                       />
                     </FormControl>
@@ -100,32 +113,34 @@ export default function MallPage() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full">
-                Add Mall
+              <Button type="submit" className="w-full" disabled={mutation.isPending}>
+                {mutation.isPending ? "Adding..." : "Add Mall"}
               </Button>
             </form>
           </Form>
         </AddModal>
       </div>
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Date</TableHead>
-            <TableHead>Amount</TableHead>
-            <TableHead>Reason</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {malls?.map((mall) => (
-            <TableRow key={mall.id}>
-              <TableCell>{new Date(mall.date).toLocaleDateString()}</TableCell>
-              <TableCell>₹{mall.amount.toLocaleString()}</TableCell>
-              <TableCell>{mall.reason}</TableCell>
+      <div className="overflow-x-auto">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Date</TableHead>
+              <TableHead>Amount</TableHead>
+              <TableHead>Reason</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {malls?.map((mall) => (
+              <TableRow key={mall.id}>
+                <TableCell>{new Date(mall.date).toLocaleDateString()}</TableCell>
+                <TableCell>₹{mall.amount.toLocaleString()}</TableCell>
+                <TableCell className="break-all">{mall.reason}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,24 +13,30 @@ interface AddModalProps {
   title: string;
   children: React.ReactNode;
   trigger?: React.ReactNode;
+  loading?: boolean;
 }
 
-export function AddModal({ title, children, trigger }: AddModalProps) {
+export function AddModal({ title, children, trigger, loading }: AddModalProps) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {trigger || (
-          <Button>
+          <Button size="sm" className="w-full sm:w-auto">
             <PlusCircle className="mr-2 h-4 w-4" />
             Add New
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-        {children}
+        {React.cloneElement(children as React.ReactElement, {
+          onSuccess: () => setOpen(false),
+          loading
+        })}
       </DialogContent>
     </Dialog>
   );
