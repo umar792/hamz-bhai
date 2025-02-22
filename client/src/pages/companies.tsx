@@ -49,9 +49,9 @@ export default function CompaniesPage() {
   });
 
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Companies Management</h1>
+    <div className="p-4 md:p-6">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
+        <h1 className="text-2xl md:text-3xl font-bold">Companies Management</h1>
         <AddModal title="Add Company">
           <Form {...form}>
             <form
@@ -88,10 +88,12 @@ export default function CompaniesPage() {
         <TableBody>
           {companies?.map((company) => (
             <TableRow key={company.id}>
-              <TableCell>{company.name}</TableCell>
+              <TableCell className="py-4">{company.name}</TableCell>
               <TableCell className="text-right">
                 <Button
                   variant="outline"
+                  size="sm"
+                  className="w-full md:w-auto"
                   onClick={() => setLocation(`/companies/${company.id}`)}
                 >
                   View Details
