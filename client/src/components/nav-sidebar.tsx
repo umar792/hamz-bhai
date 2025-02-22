@@ -49,8 +49,8 @@ export function NavSidebar() {
   return (
     <>
       {/* Mobile Header */}
-      <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-sidebar border-b border-sidebar-border px-4 flex items-center justify-between z-50">
-        <h1 className="text-base font-semibold text-sidebar-foreground truncate max-w-[200px]">
+      <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-background border-b px-4 flex items-center justify-between z-50 shadow-sm">
+        <h1 className="text-base font-semibold text-foreground truncate max-w-[200px]">
           Dilpasand Garments
         </h1>
         <Button
