@@ -11,3 +11,33 @@
     @apply font-sans antialiased bg-background text-foreground;
   }
 }
+
+@layer components {
+  .btn {
+    @apply px-3 py-1.5 rounded text-sm;
+  }
+}
+
+@layer utilities {
+  @media (max-width: 640px) {
+    .container {
+      @apply px-4;
+    }
+
+    .btn {
+      @apply px-2 py-1 text-xs;
+    }
+
+    main {
+      @apply px-2;
+    }
+
+    .table-container {
+      @apply overflow-x-auto -mx-2;
+    }
+
+    .table {
+      @apply min-w-full;
+    }
+  }
+}

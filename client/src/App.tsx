@@ -25,7 +25,7 @@ function PrivateRoute({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen">
       <NavSidebar />
-      <main className="flex-1 overflow-y-auto mt-[80px]">{children}</main>
+      <main className="flex-1 overflow-y-auto mt-[60px] px-4 md:px-6">{children}</main>
     </div>
   );
 }
