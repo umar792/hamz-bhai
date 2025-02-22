@@ -1,3 +1,4 @@
+
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,6 +12,7 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Table,
   TableBody,
@@ -30,6 +32,7 @@ export default function ExpensesPage() {
     defaultValues: {
       amount: 0,
       reason: "",
+      description: "",
       name: "",
       date: new Date().toISOString().split("T")[0],
     },
@@ -50,29 +53,20 @@ export default function ExpensesPage() {
   });
 
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Expense Tracking</h1>
+    <div className="p-4 md:p-6">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
+        <h1 className="text-2xl md:text-3xl font-bold">Expense Tracking</h1>
         <AddModal title="Add Expense">
           <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit((values) => mutation.mutate(values))}
-              className="space-y-4"
-            >
+            <form onSubmit={form.handleSubmit((values) => mutation.mutate(values))} className="space-y-4">
               <FormField
                 control={form.control}
-                name="amount"
+                name="date"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Amount</FormLabel>
+                    <FormLabel>Date</FormLabel>
                     <FormControl>
-                      <Input
-                        type="number"
-                        {...field}
-                        onChange={(e) =>
-                          field.onChange(parseInt(e.target.value, 10))
-                        }
-                      />
+                      <Input type="date" {...field} />
                     </FormControl>
                   </FormItem>
                 )}
@@ -91,6 +85,18 @@ export default function ExpensesPage() {
               />
               <FormField
                 control={form.control}
+                name="amount"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Amount</FormLabel>
+                    <FormControl>
+                      <Input type="number" {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
                 name="reason"
                 render={({ field }) => (
                   <FormItem>
@@ -103,24 +109,21 @@ export default function ExpensesPage() {
               />
               <FormField
                 control={form.control}
-                name="date"
+                name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Date</FormLabel>
+                    <FormLabel>Description</FormLabel>
                     <FormControl>
-                      <Input type="date" {...field} />
+                      <Textarea {...field} />
                     </FormControl>
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full">
-                Add Expense
-              </Button>
+              <Button type="submit" className="w-full">Add Expense</Button>
             </form>
           </Form>
         </AddModal>
       </div>
-
       <div className="overflow-x-auto -mx-4 md:mx-0">
         <Table className="min-w-full md:w-auto">
           <TableHeader>
@@ -129,6 +132,7 @@ export default function ExpensesPage() {
               <TableHead className="whitespace-nowrap">Name</TableHead>
               <TableHead className="whitespace-nowrap">Amount</TableHead>
               <TableHead className="whitespace-nowrap">Reason</TableHead>
+              <TableHead className="whitespace-nowrap">Description</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -138,6 +142,7 @@ export default function ExpensesPage() {
                 <TableCell>{expense.name}</TableCell>
                 <TableCell>₹{expense.amount.toLocaleString()}</TableCell>
                 <TableCell>{expense.reason}</TableCell>
+                <TableCell>{expense.description}</TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -51,15 +51,24 @@ export default function SalesPage() {
   });
 
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Sales Records</h1>
+    <div className="p-4 md:p-6">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
+        <h1 className="text-2xl md:text-3xl font-bold">Sales Records</h1>
         <AddModal title="Add Sale">
           <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit((values) => mutation.mutate(values))}
-              className="space-y-4"
-            >
+            <form onSubmit={form.handleSubmit((values) => mutation.mutate(values))} className="space-y-4">
+              <FormField
+                control={form.control}
+                name="date"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Date</FormLabel>
+                    <FormControl>
+                      <Input type="date" {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="amount"
@@ -67,13 +76,7 @@ export default function SalesPage() {
                   <FormItem>
                     <FormLabel>Amount</FormLabel>
                     <FormControl>
-                      <Input
-                        type="number"
-                        {...field}
-                        onChange={(e) =>
-                          field.onChange(parseInt(e.target.value, 10))
-                        }
-                      />
+                      <Input type="number" {...field} />
                     </FormControl>
                   </FormItem>
                 )}
@@ -102,26 +105,11 @@ export default function SalesPage() {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="date"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Date</FormLabel>
-                    <FormControl>
-                      <Input type="date" {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" className="w-full">
-                Add Sale
-              </Button>
+              <Button type="submit" className="w-full">Add Sale</Button>
             </form>
           </Form>
         </AddModal>
       </div>
-
       <div className="overflow-x-auto -mx-4 md:mx-0">
         <Table className="min-w-full md:w-auto">
           <TableHeader>
@@ -135,16 +123,10 @@ export default function SalesPage() {
           <TableBody>
             {sales?.map((sale) => (
               <TableRow key={sale.id}>
-                <TableCell className="whitespace-nowrap">
-                  {new Date(sale.date).toLocaleDateString()}
-                </TableCell>
-                <TableCell className="whitespace-nowrap">
-                  ₹{sale.amount.toLocaleString()}
-                </TableCell>
-                <TableCell className="whitespace-nowrap">{sale.reason}</TableCell>
-                <TableCell className="whitespace-nowrap">
-                  {sale.description}
-                </TableCell>
+                <TableCell>{new Date(sale.date).toLocaleDateString()}</TableCell>
+                <TableCell>₹{sale.amount.toLocaleString()}</TableCell>
+                <TableCell>{sale.reason}</TableCell>
+                <TableCell>{sale.description}</TableCell>
               </TableRow>
             ))}
           </TableBody>
