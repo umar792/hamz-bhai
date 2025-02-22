@@ -7,8 +7,8 @@ import {
 } from "@shared/schema";
 
 const supabase = createClient(
-  process.env.SUPABASE_URL || '',
-  process.env.SUPABASE_SERVICE_KEY || ''
+  'https://odnnwiimnqrwcswijaxn.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9kbm53aWltbnFyd2Nzd2lqYXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAyMzAyMTYsImV4cCI6MjA1NTgwNjIxNn0.ZRJWG7vaEO_kawD8-Xd3SM83PywGgvuWfsRSt6O2XAM'
 );
 
 export interface IStorage {
