@@ -49,7 +49,7 @@ export function NavSidebar() {
   return (
     <>
       {/* Mobile Header */}
-      <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-background border-b px-4 flex items-center justify-between z-50 shadow-sm">
+      <div className="md:hidden top-0 left-0 right-0 h-16 bg-background border-b px-4 flex items-center justify-between z-50 shadow-sm">
         <h1 className="text-base font-semibold text-foreground truncate max-w-[200px]">
           Dilpasand Garments
         </h1>
@@ -72,7 +72,7 @@ export function NavSidebar() {
 
       {/* Sidebar */}
       <div className={cn(
-        "fixed md:static inset-y-0 left-0 z-50 w-64 bg-sidebar transform transition-transform duration-200 ease-in-out",
+        "md:static inset-y-0 left-0 z-50 w-64 bg-sidebar transform transition-transform duration-200 ease-in-out",
         isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
         "md:flex md:h-screen md:flex-col"
       )}>
