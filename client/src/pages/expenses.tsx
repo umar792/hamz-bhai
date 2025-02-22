@@ -121,15 +121,16 @@ export default function ExpensesPage() {
         </AddModal>
       </div>
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Date</TableHead>
-            <TableHead>Name</TableHead>
-            <TableHead>Amount</TableHead>
-            <TableHead>Reason</TableHead>
-          </TableRow>
-        </TableHeader>
+      <div className="overflow-x-auto -mx-4 md:mx-0">
+        <Table className="min-w-full md:w-auto">
+          <TableHeader>
+            <TableRow>
+              <TableHead className="whitespace-nowrap">Date</TableHead>
+              <TableHead className="whitespace-nowrap">Name</TableHead>
+              <TableHead className="whitespace-nowrap">Amount</TableHead>
+              <TableHead className="whitespace-nowrap">Reason</TableHead>
+            </TableRow>
+          </TableHeader>
         <TableBody>
           {expenses?.map((expense) => (
             <TableRow key={expense.id}>

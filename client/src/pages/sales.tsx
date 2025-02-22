@@ -122,26 +122,34 @@ export default function SalesPage() {
         </AddModal>
       </div>
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Date</TableHead>
-            <TableHead>Amount</TableHead>
-            <TableHead>Reason</TableHead>
-            <TableHead>Description</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {sales?.map((sale) => (
-            <TableRow key={sale.id}>
-              <TableCell>{new Date(sale.date).toLocaleDateString()}</TableCell>
-              <TableCell>₹{sale.amount.toLocaleString()}</TableCell>
-              <TableCell>{sale.reason}</TableCell>
-              <TableCell>{sale.description}</TableCell>
+      <div className="overflow-x-auto -mx-4 md:mx-0">
+        <Table className="min-w-full md:w-auto">
+          <TableHeader>
+            <TableRow>
+              <TableHead className="whitespace-nowrap">Date</TableHead>
+              <TableHead className="whitespace-nowrap">Amount</TableHead>
+              <TableHead className="whitespace-nowrap">Reason</TableHead>
+              <TableHead className="whitespace-nowrap">Description</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {sales?.map((sale) => (
+              <TableRow key={sale.id}>
+                <TableCell className="whitespace-nowrap">
+                  {new Date(sale.date).toLocaleDateString()}
+                </TableCell>
+                <TableCell className="whitespace-nowrap">
+                  ₹{sale.amount.toLocaleString()}
+                </TableCell>
+                <TableCell className="whitespace-nowrap">{sale.reason}</TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {sale.description}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }
