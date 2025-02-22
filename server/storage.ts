@@ -1,3 +1,4 @@
+
 import { createClient } from '@supabase/supabase-js';
 import {
   type User, type Mall, type Expense, type Sale,
@@ -39,94 +40,126 @@ export interface IStorage {
 
 export class SupabaseStorage implements IStorage {
   async getUser(email: string, password: string): Promise<User | undefined> {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('users')
       .select()
       .eq('email', email)
       .eq('password', password)
       .single();
+      
+    if (error) throw error;
     return data || undefined;
   }
 
   async getMalls(): Promise<Mall[]> {
-    const { data } = await supabase.from('malls').select();
+    const { data, error } = await supabase
+      .from('malls')
+      .select();
+      
+    if (error) throw error;
     return data || [];
   }
 
   async createMall(mall: InsertMall): Promise<Mall> {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('malls')
       .insert(mall)
       .select()
       .single();
+      
+    if (error) throw error;
     return data!;
   }
 
   async getExpenses(): Promise<Expense[]> {
-    const { data } = await supabase.from('expenses').select();
+    const { data, error } = await supabase
+      .from('expenses')
+      .select();
+      
+    if (error) throw error;
     return data || [];
   }
 
   async createExpense(expense: InsertExpense): Promise<Expense> {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('expenses')
       .insert(expense)
       .select()
       .single();
+      
+    if (error) throw error;
     return data!;
   }
 
   async getSales(): Promise<Sale[]> {
-    const { data } = await supabase.from('sales').select();
+    const { data, error } = await supabase
+      .from('sales')
+      .select();
+      
+    if (error) throw error;
     return data || [];
   }
 
   async createSale(sale: InsertSale): Promise<Sale> {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('sales')
       .insert(sale)
       .select()
       .single();
+      
+    if (error) throw error;
     return data!;
   }
 
   async getCompanies(): Promise<Company[]> {
-    const { data } = await supabase.from('companies').select();
+    const { data, error } = await supabase
+      .from('companies')
+      .select();
+      
+    if (error) throw error;
     return data || [];
   }
 
   async getCompany(id: number): Promise<Company | undefined> {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('companies')
       .select()
       .eq('id', id)
       .single();
+      
+    if (error) throw error;
     return data || undefined;
   }
 
   async createCompany(company: InsertCompany): Promise<Company> {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('companies')
       .insert(company)
       .select()
       .single();
+      
+    if (error) throw error;
     return data!;
   }
 
   async getTransactions(companyId: number): Promise<Transaction[]> {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('transactions')
       .select()
-      .eq('companyId', companyId);
+      .eq('company_id', companyId);
+      
+    if (error) throw error;
     return data || [];
   }
 
   async createTransaction(transaction: InsertTransaction): Promise<Transaction> {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('transactions')
       .insert(transaction)
       .select()
       .single();
+      
+    if (error) throw error;
     return data!;
   }
 }
