@@ -1,7 +1,8 @@
 {
   "functions": {
-    "api/*.js": {
-      "runtime": "nodejs18@1.0.0"
+    "server/index.js": {
+      "runtime": "nodejs18@1.0.0",
+      "includeFiles": "api/index.js"
     }
   },
   "rewrites": [
