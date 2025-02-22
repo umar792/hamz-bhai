@@ -131,17 +131,18 @@ export default function ExpensesPage() {
               <TableHead className="whitespace-nowrap">Reason</TableHead>
             </TableRow>
           </TableHeader>
-        <TableBody>
-          {expenses?.map((expense) => (
-            <TableRow key={expense.id}>
-              <TableCell>{new Date(expense.date).toLocaleDateString()}</TableCell>
-              <TableCell>{expense.name}</TableCell>
-              <TableCell>₹{expense.amount.toLocaleString()}</TableCell>
-              <TableCell>{expense.reason}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          <TableBody>
+            {expenses?.map((expense) => (
+              <TableRow key={expense.id}>
+                <TableCell>{new Date(expense.date).toLocaleDateString()}</TableCell>
+                <TableCell>{expense.name}</TableCell>
+                <TableCell>₹{expense.amount.toLocaleString()}</TableCell>
+                <TableCell>{expense.reason}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }
