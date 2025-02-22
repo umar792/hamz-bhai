@@ -6,13 +6,13 @@
   "engines": {
     "node": "18.x"
   },
-  "vercel": {
-    "functions": {
-      "api/index.js": {
-        "runtime": "nodejs18.x"
-      }
+  "now": {
+  "functions": {
+    "api/index.js": {
+      "runtime": "nodejs18@1.0.0"
     }
-  },
+  }
+},
   "scripts": {
     "dev": "tsx server/index.ts",
     "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outfile=api/index.js",
