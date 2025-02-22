@@ -1,9 +1,15 @@
+import { createClient } from '@supabase/supabase-js';
 import {
   type User, type Mall, type Expense, type Sale,
   type Company, type Transaction,
   type InsertUser, type InsertMall, type InsertExpense,
   type InsertSale, type InsertCompany, type InsertTransaction
 } from "@shared/schema";
+
+const supabase = createClient(
+  process.env.SUPABASE_URL || '',
+  process.env.SUPABASE_SERVICE_KEY || ''
+);
 
 export interface IStorage {
   // Users
@@ -31,114 +37,98 @@ export interface IStorage {
   createTransaction(transaction: InsertTransaction): Promise<Transaction>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<number, User>;
-  private malls: Map<number, Mall>;
-  private expenses: Map<number, Expense>;
-  private sales: Map<number, Sale>;
-  private companies: Map<number, Company>;
-  private transactions: Map<number, Transaction>;
-  
-  private currentIds: {
-    user: number;
-    mall: number;
-    expense: number;
-    sale: number;
-    company: number;
-    transaction: number;
-  };
-
-  constructor() {
-    this.users = new Map();
-    this.malls = new Map();
-    this.expenses = new Map();
-    this.sales = new Map();
-    this.companies = new Map();
-    this.transactions = new Map();
-    
-    this.currentIds = {
-      user: 1,
-      mall: 1,
-      expense: 1,
-      sale: 1,
-      company: 1,
-      transaction: 1
-    };
-
-    // Add static user
-    this.users.set(1, {
-      id: 1,
-      email: "hamza@gmail.com",
-      password: "hamza123"
-    });
-  }
-
+export class SupabaseStorage implements IStorage {
   async getUser(email: string, password: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      user => user.email === email && user.password === password
-    );
+    const { data } = await supabase
+      .from('users')
+      .select()
+      .eq('email', email)
+      .eq('password', password)
+      .single();
+    return data || undefined;
   }
 
   async getMalls(): Promise<Mall[]> {
-    return Array.from(this.malls.values());
+    const { data } = await supabase.from('malls').select();
+    return data || [];
   }
 
   async createMall(mall: InsertMall): Promise<Mall> {
-    const id = this.currentIds.mall++;
-    const newMall = { ...mall, id };
-    this.malls.set(id, newMall);
-    return newMall;
+    const { data } = await supabase
+      .from('malls')
+      .insert(mall)
+      .select()
+      .single();
+    return data!;
   }
 
   async getExpenses(): Promise<Expense[]> {
-    return Array.from(this.expenses.values());
+    const { data } = await supabase.from('expenses').select();
+    return data || [];
   }
 
   async createExpense(expense: InsertExpense): Promise<Expense> {
-    const id = this.currentIds.expense++;
-    const newExpense = { ...expense, id };
-    this.expenses.set(id, newExpense);
-    return newExpense;
+    const { data } = await supabase
+      .from('expenses')
+      .insert(expense)
+      .select()
+      .single();
+    return data!;
   }
 
   async getSales(): Promise<Sale[]> {
-    return Array.from(this.sales.values());
+    const { data } = await supabase.from('sales').select();
+    return data || [];
   }
 
   async createSale(sale: InsertSale): Promise<Sale> {
-    const id = this.currentIds.sale++;
-    const newSale = { ...sale, id };
-    this.sales.set(id, newSale);
-    return newSale;
+    const { data } = await supabase
+      .from('sales')
+      .insert(sale)
+      .select()
+      .single();
+    return data!;
   }
 
   async getCompanies(): Promise<Company[]> {
-    return Array.from(this.companies.values());
+    const { data } = await supabase.from('companies').select();
+    return data || [];
   }
 
   async getCompany(id: number): Promise<Company | undefined> {
-    return this.companies.get(id);
+    const { data } = await supabase
+      .from('companies')
+      .select()
+      .eq('id', id)
+      .single();
+    return data || undefined;
   }
 
   async createCompany(company: InsertCompany): Promise<Company> {
-    const id = this.currentIds.company++;
-    const newCompany = { ...company, id };
-    this.companies.set(id, newCompany);
-    return newCompany;
+    const { data } = await supabase
+      .from('companies')
+      .insert(company)
+      .select()
+      .single();
+    return data!;
   }
 
   async getTransactions(companyId: number): Promise<Transaction[]> {
-    return Array.from(this.transactions.values()).filter(
-      t => t.companyId === companyId
-    );
+    const { data } = await supabase
+      .from('transactions')
+      .select()
+      .eq('companyId', companyId);
+    return data || [];
   }
 
   async createTransaction(transaction: InsertTransaction): Promise<Transaction> {
-    const id = this.currentIds.transaction++;
-    const newTransaction = { ...transaction, id };
-    this.transactions.set(id, newTransaction);
-    return newTransaction;
+    const { data } = await supabase
+      .from('transactions')
+      .insert(transaction)
+      .select()
+      .single();
+    return data!;
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new SupabaseStorage();
