@@ -1,12 +1,1 @@
-{
-  "functions": {
-    "server/index.js": {
-      "runtime": "nodejs18@1.0.0",
-      "includeFiles": "server/index.js"
-    }
-  },
-  "rewrites": [
-    { "source": "/server/(.*)", "destination": "/server/index.js" },
-    { "source": "/(.*)", "destination": "/dist/client/index.html" }
-  ]
-}
+
