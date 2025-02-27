@@ -49,6 +49,7 @@ export default function ExpensesPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/expenses"] });
       toast({ title: "Expense added successfully" });
+      form.reset();
     },
   });
 
@@ -93,7 +94,7 @@ export default function ExpensesPage() {
                       <Input 
                         type="number" 
                         {...field} 
-                        onChange={(e) => field.onChange(parseInt(e.target.value, 10) || 0)}
+                        onChange={(e) => field.onChange(parseInt(e.target.value))}
                       />
                     </FormControl>
                   </FormItem>

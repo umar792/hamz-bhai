@@ -69,6 +69,8 @@ export default function CompanyDetailsPage({ id }: CompanyDetailsPageProps) {
         queryKey: [`/api/companies/${id}/transactions`],
       });
       toast({ title: "Transaction added successfully" });
+      // clear the form
+      form.reset();
     },
   });
 

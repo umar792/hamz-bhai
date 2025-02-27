@@ -82,7 +82,7 @@ export default function MallPage() {
                         type="number"
                         {...field}
                         onChange={(e) =>
-                          field.onChange(parseInt(e.target.value) || 0)
+                          field.onChange(parseInt(e.target.value))
                         }
                       />
                     </FormControl>

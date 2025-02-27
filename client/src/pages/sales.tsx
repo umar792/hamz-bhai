@@ -47,6 +47,7 @@ export default function SalesPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/sales"] });
       toast({ title: "Sale added successfully" });
+      form.reset();
     },
   });
 
@@ -64,7 +65,9 @@ export default function SalesPage() {
                   <FormItem>
                     <FormLabel>Date</FormLabel>
                     <FormControl>
-                      <Input type="date" {...field} />
+                      <Input type="date" {...field} 
+                       
+                      />
                     </FormControl>
                   </FormItem>
                 )}
@@ -76,7 +79,11 @@ export default function SalesPage() {
                   <FormItem>
                     <FormLabel>Amount</FormLabel>
                     <FormControl>
-                      <Input type="number" {...field} />
+                      <Input type="number" {...field}
+                      onChange={(e) =>
+                        field.onChange(parseInt(e.target.value))
+                      }
+                      />
                     </FormControl>
                   </FormItem>
                 )}
@@ -88,7 +95,11 @@ export default function SalesPage() {
                   <FormItem>
                     <FormLabel>Reason</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} 
+                      onChange={(e) =>
+                        field.onChange((e.target.value))
+                      }
+                      />
                     </FormControl>
                   </FormItem>
                 )}
@@ -100,7 +111,11 @@ export default function SalesPage() {
                   <FormItem>
                     <FormLabel>Description</FormLabel>
                     <FormControl>
-                      <Textarea {...field} />
+                      <Textarea {...field} 
+                      onChange={(e) =>
+                        field.onChange((e.target.value))
+                      }
+                      />
                     </FormControl>
                   </FormItem>
                 )}
