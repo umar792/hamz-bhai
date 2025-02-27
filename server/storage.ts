@@ -146,7 +146,7 @@ export class SupabaseStorage implements IStorage {
     const { data, error } = await supabase
       .from('transactions')
       .select()
-      .eq('company_id', companyId);
+      .eq('companyId', companyId);
       
     if (error) throw error;
     return data || [];
