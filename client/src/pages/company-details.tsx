@@ -74,19 +74,21 @@ export default function CompanyDetailsPage({ id }: CompanyDetailsPageProps) {
     },
   });
 
-  const totalMall = transactions
-    ?.filter((t) => t.type === "mall")
-    .reduce((sum, t) => sum + t.amount, 0) || 0;
+  const totalMall =
+    transactions
+      ?.filter((t) => t.type === "mall")
+      .reduce((sum, t) => sum + t.amount, 0) || 0;
 
-  const totalPayment = transactions
-    ?.filter((t) => t.type === "payment")
-    .reduce((sum, t) => sum + t.amount, 0) || 0;
+  const totalPayment =
+    transactions
+      ?.filter((t) => t.type === "payment")
+      .reduce((sum, t) => sum + t.amount, 0) || 0;
 
   const pendingAmount = totalMall - totalPayment;
 
   return (
     <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-6 h-auto">
         <h1 className="text-3xl font-bold">{company?.name}</h1>
         <AddModal title="Add Transaction">
           <Form {...form}>
@@ -117,24 +119,21 @@ export default function CompanyDetailsPage({ id }: CompanyDetailsPageProps) {
                 name="type"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Type</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select type" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="mall">Mall</SelectItem>
-                        <SelectItem value="payment">Payment</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <FormLabel className="w-[100%] block">Type</FormLabel>
+                    <FormControl>
+                      <select
+                        value={field.value}
+                        onChange={(e) => field.onChange(e.target.value)}
+                        className="p-2 border rounded w-[100%] mt-2 bg-transparent text-black"
+                      >
+                        <option value="mall">Mall</option>
+                        <option value="payment">Payment</option>
+                      </select>
+                    </FormControl>
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={form.control}
                 name="date"
@@ -185,12 +184,14 @@ export default function CompanyDetailsPage({ id }: CompanyDetailsPageProps) {
           </TableHeader>
           <TableBody>
             {transactions?.map((transaction) => (
-              <TableRow key={transaction.id}>
+              <TableRow key={transaction?.id}>
                 <TableCell>
-                  {new Date(transaction.date).toLocaleDateString()}
+                  {new Date(transaction?.date).toLocaleDateString()}
                 </TableCell>
-                <TableCell className="capitalize">{transaction.type}</TableCell>
-                <TableCell>₹{transaction.amount.toLocaleString()}</TableCell>
+                <TableCell className="capitalize">
+                  {transaction?.type}
+                </TableCell>
+                <TableCell>₹{transaction?.amount?.toLocaleString()}</TableCell>
               </TableRow>
             ))}
           </TableBody>
